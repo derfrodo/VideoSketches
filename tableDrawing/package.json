@@ -7,16 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./node_modules/nodemon/bin/nodemon.js --watch server.js ./server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/derfrodo/tableDrawing.git"
-  },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/derfrodo/tableDrawing/issues"
+    "url": "https://github.com/derfrodo/VideoSketches/issues"
   },
-  "homepage": "https://github.com/derfrodo/tableDrawing#readme",
+  "homepage": "https://github.com/derfrodo/VideoSketches#readme",
   "dependencies": {
     "express": "^4.15.2",
     "nodemon": "^1.11.0",
