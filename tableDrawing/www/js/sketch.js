@@ -5,11 +5,11 @@ let c;
 let pt;
 let p;
 
-let tableRows = 100;
-let tableCols = 100;
+let tableRows = 10;
+let tableCols = 10;
 
-let cellWidth = 100;
-let cellHeight = 100;
+let cellWidth = undefined;
+let cellHeight = undefined;
 
 let showTable = false;
 
@@ -19,6 +19,7 @@ function preload() {
 
 function setup() {
     frameRate(1);
+
 
     cellWidth = img.width / tableCols;
     cellHeight = img.height / tableRows;
@@ -30,31 +31,83 @@ function setup() {
     pt = createP('');
     c = createCanvas(img.width, img.height);
 }
+let tblCells = [];
+let gi = 0;
+let ginterval = 3;
+
+function createTableCells() {
+
+    let r = 0, g = 0, b = 0, a = 0;
+
+    let max = gi + ginterval;
+    max = max
+        > tableRows ? tableRows : max;
+
+    for (let i = gi; i < max; i++) {
+        let rowCells = [];
+        for (let j = 0; j < tableCols; j++) {
+
+            let cell = getColorForImgRect(floor(j * cellWidth), floor(i * cellHeight), cellWidth, cellHeight);
+            rowCells.push(cell);
+        }
+        tblCells.push(rowCells);
+    }
+    gi += ginterval;
+}
+
+function getColorForImgRect(x, y, wdth, hght) {
+    img.loadPixels();
+    let pixels = img.pixels;
+
+    let ox = floor(x);
+    let oy = floor(y);
+
+    let ow = floor(wdth);
+    let oh = floor(hght);
+
+    let r = 0, g = 0, b = 0, a = 0;
+
+    for (var i = ox; i < ox + ow; i++) {
+        for (var j = oy; j < oy + oh; j++) {
+            // loop over
+            const idx = 4 * (j * img.width + i);
+            // console.log(pixels[idx]);
+
+            r += (pixels[idx]);
+            g += (pixels[idx + 1]);
+            b += (pixels[idx + 2]);
+            a += (pixels[idx + 3]);
+        }
+    }
+
+    let pxCnt = ow * oh;
+
+    return { r: r / pxCnt, g: g / pxCnt, b: b / pxCnt, a: a / pxCnt };
+}
 
 function draw() {
     p.html(img.width + "; " + img.height + "(" + showTable + ")");
 
-let densitiy = devicePixelRatio
-    img.loadPixels();
+    createTableCells();
 
+    let max = gi;
+    max = max
+        > tableRows ? tableRows : max;
 
-    let tblCells = [];
-    for (let i = 0; i < tableRows; i++) {
-        let rowCells = [];
-        for (let j = 0; j < tableCols; j++) {
-            let cell = {};
-
-            rowCells.push(cell);
-        }
-        tblCells.push(rowCells);    
-    }
-
-    let tbl = `<table width="${img.width}" height="${img.height}">`;
-    for (let i = 0; i < tableRows; i++) {
+    let tbl = `<table width="${img.width}" height="${img.height * (max / tableRows)}">`;
+    for (let i = 0; i < max; i++) {
         tbl += "<tr>";
         for (let j = 0; j < tableCols; j++) {
-            let value = "" + hex(random(0, 256), 2) + hex(random(0, 256), 2) + hex(random(0, 256), 2);
-            tbl += `<td bgcolor="${value}"></td>`;
+            try {
+                let value = "" + hex(tblCells[i][j].r, 2) + hex(tblCells[i][j].g, 2) + hex(tblCells[i][j].b, 2);
+                tbl += `<td bgcolor="${value}"></td>`;
+
+            }
+            catch (e) {
+                console.log(e)
+                console.log(i)
+                console.log(j)
+            }
         }
         tbl += "</tr>";
     }

@@ -1,6 +1,6 @@
 function addCanvasFullscreenButton(){
     
-    button = createButton('fullscreen');
+    button = createButton('go fullscreen');
     button.mousePressed(goFullScreen);
 
 }
