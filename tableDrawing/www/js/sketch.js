@@ -5,8 +5,8 @@ let c;
 let pt;
 let p;
 
-let tableRows = 10;
-let tableCols = 10;
+let tableRows = 100;
+let tableCols = 100;
 
 let cellWidth = undefined;
 let cellHeight = undefined;
@@ -82,7 +82,7 @@ function getColorForImgRect(x, y, wdth, hght) {
 
     let pxCnt = ow * oh;
 
-    return { r: r / pxCnt, g: g / pxCnt, b: b / pxCnt, a: a / pxCnt };
+    return { r: floor(r / pxCnt), g: floor(g / pxCnt), b: floor(b / pxCnt), a: a / pxCnt };
 }
 
 function draw() {
