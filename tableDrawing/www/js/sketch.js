@@ -18,7 +18,7 @@ function preload() {
 }
 
 function setup() {
-    frameRate(1);
+    frameRate(10);
 
 
     cellWidth = img.width / tableCols;
@@ -33,7 +33,7 @@ function setup() {
 }
 let tblCells = [];
 let gi = 0;
-let ginterval = 3;
+let ginterval = 1;
 
 function createTableCells() {
 
